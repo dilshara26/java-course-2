@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Doctor {
@@ -10,6 +11,8 @@ public class Doctor {
     public String specialization;
     public String contactNumber;
     public ArrayList<Date> availabilities;
+    public HashMap<Date, ArrayList<Appointment>> allAppointments;
+
 
     public Doctor(int doctorId, String name, String birthday, String specialization, String contactNumber) {
         this.doctorId = doctorId;
@@ -18,6 +21,7 @@ public class Doctor {
         this.specialization = specialization;
         this.contactNumber = contactNumber;
         this.availabilities = new ArrayList<>();
+        this.allAppointments = new HashMap<>();
     }
 
     public ArrayList<Date> getAvailabilities() {
@@ -37,7 +41,18 @@ public class Doctor {
         for (Date d: availabilities) {
             System.out.println(d);
         }
+    }
 
+    public void setAppointment(Date date, Appointment appointment){
+        ArrayList<Appointment> currentAppointmentsForTheDate = allAppointments.get(date);
+        if(currentAppointmentsForTheDate == null){
+            ArrayList<Appointment> tempArrayList = new ArrayList<>();
+            tempArrayList.add(appointment);
+            allAppointments.put(date,tempArrayList);
+        }else{
+            currentAppointmentsForTheDate.add(appointment);
+            allAppointments.put(date,currentAppointmentsForTheDate);
+        }
     }
 
 
